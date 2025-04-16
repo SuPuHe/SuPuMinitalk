@@ -6,7 +6,7 @@
 /*   By: omizin <omizin@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:19:17 by omizin            #+#    #+#             */
-/*   Updated: 2025/04/15 15:52:04 by omizin           ###   ########.fr       */
+/*   Updated: 2025/04/16 10:47:27 by omizin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_handle_signal(int sig, siginfo_t *info, void *context)
 		bit = 0;
 		c = 0;
 	}
-	usleep(50);
+	usleep(25);
 	kill(info->si_pid, SIGUSR1);
 }
 

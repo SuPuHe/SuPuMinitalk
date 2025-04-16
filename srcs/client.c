@@ -6,7 +6,7 @@
 /*   By: omizin <omizin@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:35:19 by omizin            #+#    #+#             */
-/*   Updated: 2025/04/15 15:51:35 by omizin           ###   ########.fr       */
+/*   Updated: 2025/04/16 10:51:38 by omizin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ void	ft_handle_ack(int sig)
 {
 	(void)sig;
 	g_ack_received = 1;
-	usleep(50);
+	usleep(25);
+}
+
+void	ft_kill_error(void)
+{
+	ft_printf("Error: kill failed\n");
+	exit(1);
 }
 
 void	ft_send_char(pid_t pid, char c)
@@ -30,9 +36,15 @@ void	ft_send_char(pid_t pid, char c)
 	{
 		g_ack_received = 0;
 		if ((c >> i) & 1)
-			kill(pid, SIGUSR1);
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				ft_kill_error();
+		}
 		else
-			kill(pid, SIGUSR2);
+		{
+			if (kill(pid, SIGUSR2) == -1)
+				ft_kill_error();
+		}
 		while (!g_ack_received)
 			pause();
 		i--;
